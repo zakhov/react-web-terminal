@@ -4,22 +4,20 @@ name: react-web-terminal-tests
 on: pull_request
 
 jobs:
-  # Set the job key. The key is displayed as the job name
-  # when a job name is not provided
-  unit-tests:
-    # Name the Job
-    name: Run the unit tests of the Web Terminal project
-    # Set the type of machine to run on
+  build:
     runs-on: ubuntu-latest
 
-    steps:
-      # Checks out a copy of your repository on the ubuntu-latest machine
-      - name: Checkout code
-        uses: actions/checkout@v2
+    strategy:
+      matrix:
+        node-version: [15.x]
 
-      # Runs the Super-Linter action
-      - name: NPM Tests
-        uses: anna-money/github-actions-npm@v1
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm test
         env:
-          DEFAULT_BRANCH: master
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CI: true
