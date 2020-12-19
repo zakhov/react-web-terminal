@@ -12,7 +12,7 @@ describe('Terminal', () => {
   })
 })
 
-describe('User login', () => {
+test('User login', () => {
   const name = 'Bob'
   const wrapper = shallow(<Terminal />)
   wrapper.instance().performLogin(name)
@@ -20,7 +20,7 @@ describe('User login', () => {
   expect(wrapper.state().is_authenticated).toBe(true)
 })
 
-describe('Topup user balance', async () => {
+test('Topup user balance', async () => {
   const name = 'Bob'
   const wrapper = shallow(<Terminal />)
   const instance = wrapper.instance()
@@ -31,7 +31,7 @@ describe('Topup user balance', async () => {
   expect(wrapper.state().clients[0].balance).toEqual(100)
 })
 
-describe('Transfer 30 in balance to another account with initial balance of 100', async () => {
+test('Transfer 30 in balance to another account with initial balance of 100', async () => {
   const sender_name = 'Bob'
   const recipient_name = 'Alice'
   const wrapper = shallow(<Terminal />)
@@ -54,7 +54,7 @@ describe('Transfer 30 in balance to another account with initial balance of 100'
   expect(wrapper.state().clients[recipient_index].balance).toEqual(30)
 })
 
-describe('Transfer 30 in credit to another account with initial balance of 0', async () => {
+test('Transfer 30 in credit to another account with initial balance of 0', async () => {
   const sender_name = 'Bob'
   const recipient_name = 'Alice'
   const wrapper = shallow(<Terminal />)
@@ -84,7 +84,7 @@ describe('Transfer 30 in credit to another account with initial balance of 0', a
   ).toEqual(30)
 })
 
-describe('Transfer 200 in credit to another account with initial balance of 100', async () => {
+test('Transfer 200 in credit to another account with initial balance of 100', async () => {
   const sender_name = 'Bob'
   const recipient_name = 'Alice'
   const wrapper = shallow(<Terminal />)
