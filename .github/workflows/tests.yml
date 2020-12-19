@@ -1,7 +1,7 @@
 name: react-web-terminal-tests
 
 # Run this workflow every time a new commit pushed to your repository
-on: commit
+on: pull_request
 
 jobs:
   build:
