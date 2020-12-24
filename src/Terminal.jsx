@@ -82,7 +82,6 @@ class Terminal extends React.Component {
               await self.updateAdjustment(client_obj, key, curr_client.name, 0)
               const target_balance = self.getClientByName(key).balance + loan
               await self.updateBalanceByAccount(client_obj, key, target_balance)
-              console.log('transfer')
               messages.push(`Transferred ${loan} to ${key}.`)
               messages.push(`Your balance is ${final_balance}.`)
             }
