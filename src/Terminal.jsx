@@ -83,7 +83,7 @@ class Terminal extends React.Component {
               const target_balance = self.getClientByName(key).balance + loan
               await self.updateBalanceByAccount(client_obj, key, target_balance)
               messages.push(`Transferred ${loan} to ${key}.`)
-              messages.push(`Your balance is ${final_balance}`)
+              messages.push(`Your balance is ${final_balance}.`)
             }
           }
         }
@@ -144,6 +144,7 @@ class Terminal extends React.Component {
       return client.name.toLowerCase() === to_client_name.toLowerCase()
     })
     const is_self = to_client_name === this.state.active_client
+    let final_amount
 
     if (!is_existing_client || is_self) {
       this.addHistory("The account entered doesn't exist.")
@@ -162,7 +163,8 @@ class Terminal extends React.Component {
         return { ...client }
       })
 
-      let final_amount = amount
+      const target_amount = this.getClientByName(to_client_name).balance
+      final_amount = Number(amount) + Number(target_amount)
 
       if (final_balance < 0) {
         const adjustment_balance = Math.abs(final_balance)
@@ -198,6 +200,12 @@ class Terminal extends React.Component {
       }.`,
     ]
     const adjustment_messages = this.checkAdjustment(this.state.active_client)
+
+    if (adjustment_messages.length < 1) {
+      adjustment_messages.unshift(
+        `Transferred ${final_amount} to ${to_client_name}.`,
+      )
+    }
 
     this.addHistory([...default_messages, ...adjustment_messages])
   }
